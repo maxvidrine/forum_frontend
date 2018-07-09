@@ -4,7 +4,9 @@ import CommentContainer from './CommentContainer'
 class Main extends Component {
   render () {
     return (
-      <CommentContainer />
+      <main>
+        <CommentContainer />
+      </main>
     )
   }
 }

@@ -5,7 +5,7 @@ class CommentTemplate extends Component {
   render () {
     return (
         <Comment>
-            <Comment.Avatar as='a' src='/images/avatar/small/christian.jpg' />
+            <Comment.Avatar as='a' src={this.props.photo_url} />
             <Comment.Content>
             <Comment.Author>{this.props.user}</Comment.Author>
             <Comment.Metadata>
