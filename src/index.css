@@ -1,5 +1,5 @@
-/* CSS Reset
-*, html, body, div, span, object, iframe,
+/* CSS Reset */
+/* *, html, body, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, p,
 a, a:hover, button, img, i, ol, ul, li,
 form,
@@ -17,6 +17,7 @@ menu, nav, section, .navbar, .navbar-toggler {
   font-family: 'Open Sans', sans-serif;
   color: inherit;
   background-color: transparent;
+  border: 1px solid black;
 } */
 
 body {
@@ -36,6 +37,7 @@ main {
   padding: 0;
   height: 95vh;
 }
-/* .ui.grid {
-  margin-bottom: 1rem;
-} */
+
+h1#header {
+  margin-top: 1em;
+}

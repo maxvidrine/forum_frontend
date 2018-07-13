@@ -4,19 +4,18 @@ import { Grid, Comment } from 'semantic-ui-react'
 import CommentTemplate from './CommentTemplate'
 import CommentForm from './CommentForm'
 
-
 class CommentContainer extends Component {
-
   state = {
     comments: []
   }
 
-  componentWillMount = async() => {
-    await axios(`http://localhost:8000`)
+
+  async getComments() {
+    axios(`http://localhost:8000/`)
     .then(res => {
-      console.log(res)
       // let comments = JSON.parse(res.data);
       let comments = res.data;
+      console.log(comments)
       this.setState({ comments });
     })
     .catch(function (error) {
@@ -24,10 +23,64 @@ class CommentContainer extends Component {
     });
   }
 
-  render () {
-    // let jsonresponse = "[{\"model\": \"forum.post\", \"pk\": 1, \"fields\": {\"user\": 1, \"date\": \"2018-07-05T23:08:56Z\", \"body\": \"On the subject of bunny rabbits\"}}, {\"model\": \"forum.post\", \"pk\": 2, \"fields\": {\"user\": 2, \"date\": \"2018-07-05T23:09:23Z\", \"body\": \"On the subject of prayer\"}}]";
-    // let comment_data = JSON.parse(jsonresponse)
 
+  componentWillMount = async() => {
+    this.getComments()
+  }
+
+  getToken() {
+    const token = JSON.parse(
+      JSON.parse(
+        localStorage.getItem('persist:forum')).auth)
+      .access.token
+    return token
+  }
+
+  async postNewComment(newComment) {
+    let config = {
+      headers: {"Authorization": "bearer " + 
+        this.getToken()}
+    }
+    console.log(config)
+    axios.post('http://localhost:8000/addcomment', newComment, config)
+    .then(function (response) {
+      console.log(response);
+    })
+    // .then(getComments())
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+///////////////////////////////////
+
+
+  // refreshAccessToken = (token) => ({
+  //   [RSAA]: {
+  //     endpoint: 'http://localhost:8000/api/auth/token/refresh/',
+  //     method: 'POST',
+  //     body: JSON.stringify({refresh: token}),
+  //     headers: { 'Content-Type': 'application/json' },
+  //     types: [
+  //       TOKEN_REQUEST, TOKEN_RECEIVED, TOKEN_FAILURE
+  //     ]
+  //   }
+  // })
+
+  constructor(){
+  super()
+    this.createComment = this.createComment.bind(this);
+  }
+
+  createComment(newComment) {
+    console.log("createComment has been triggered")
+    console.log(newComment)
+    this.postNewComment(newComment)
+
+      // axios.get if there isn't an automated response to post
+      // update comments, setState
+  }
+
+  render () {
     let comments = this.state.comments.map(comment => {
       return <CommentTemplate 
         key={'comment' + comment.pk} 
@@ -37,13 +90,14 @@ class CommentContainer extends Component {
         body={comment.body} 
       />
     })
+
     return (
       <Grid centered columns={2}>
       <Grid.Column>
-      <Comment.Group>
-        {comments}
-        <CommentForm />
-      </Comment.Group>
+        <Comment.Group>
+          {comments}
+          <CommentForm createComment={this.createComment} />
+        </Comment.Group>
       </Grid.Column>
       </Grid>
     )

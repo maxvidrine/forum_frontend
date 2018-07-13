@@ -12,7 +12,7 @@ class Header extends Component {
               <Image src='/images/wireframe/paragraph.png' />
             </Grid.Column>
             <Grid.Column>
-              <h1>Header World!</h1>
+              <h1 id="header">Forum</h1>
             </Grid.Column>
             <Grid.Column>
               <Nav />

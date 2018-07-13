@@ -4,7 +4,9 @@ class Footer extends Component {
   render () {
     return (
       <footer>
-        <h1>Footer World!</h1>
+        <a href="https://creativecommons.org/licenses/by/4.0/deed.ast">
+          CC-BY 4.0 Max Vidrine 2018
+        </a>
       </footer>
     )
   }
