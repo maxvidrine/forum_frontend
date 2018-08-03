@@ -7,9 +7,11 @@ export const TOKEN_REQUEST = '@@auth/TOKEN_REQUEST';
 export const TOKEN_RECEIVED = '@@auth/TOKEN_RECEIVED';
 export const TOKEN_FAILURE = '@@auth/TOKEN_FAILURE';
 
+const backend_url = 'https://forum-parvum.herokuapp.com/'
+
 export const login = (username, password) => ({
   [RSAA]: {
-    endpoint: 'http://localhost:8000/api/auth/token/obtain/',
+    endpoint: `${backend_url}api/auth/token/obtain/`,
     method: 'POST',
     body: JSON.stringify({username, password}),
     headers: { 'Content-Type': 'application/json' },
@@ -21,7 +23,7 @@ export const login = (username, password) => ({
 
 export const refreshAccessToken = (token) => ({
   [RSAA]: {
-    endpoint: 'http://localhost:8000/api/auth/token/refresh/',
+    endpoint: `${backend_url}api/auth/token/refresh/`,
     method: 'POST',
     body: JSON.stringify({refresh: token}),
     headers: { 'Content-Type': 'application/json' },

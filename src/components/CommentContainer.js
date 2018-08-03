@@ -3,17 +3,19 @@ import axios from 'axios'
 import { Grid, Comment } from 'semantic-ui-react'
 import CommentTemplate from './CommentTemplate'
 import CommentForm from './CommentForm'
+import {newComment} from  '../actions/comment'
+
+const backend_url = 'https://forum-parvum.herokuapp.com'
 
 class CommentContainer extends Component {
   state = {
-    comments: []
+    comments: [],
+    newComment: newComment,
   }
 
-
   async getComments() {
-    axios(`http://localhost:8000/`)
+    axios(`${backend_url}`)
     .then(res => {
-      // let comments = JSON.parse(res.data);
       let comments = res.data;
       console.log(comments)
       this.setState({ comments });
@@ -37,34 +39,25 @@ class CommentContainer extends Component {
   }
 
   async postNewComment(newComment) {
+    console.log("postNewComment has been triggered")
+    console.log(newComment)
     let config = {
-      headers: {"Authorization": "bearer " + 
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': "bearer " + 
         this.getToken()}
     }
-    console.log(config)
-    axios.post('http://localhost:8000/addcomment', newComment, config)
+    axios.post(`${backend_url}/addcomment/`,
+      newComment, 
+      config)
     .then(function (response) {
       console.log(response);
     })
-    // .then(getComments())
+    // .then(this.getComments())
     .catch(function (error) {
       console.log(error);
     });
   }
-///////////////////////////////////
-
-
-  // refreshAccessToken = (token) => ({
-  //   [RSAA]: {
-  //     endpoint: 'http://localhost:8000/api/auth/token/refresh/',
-  //     method: 'POST',
-  //     body: JSON.stringify({refresh: token}),
-  //     headers: { 'Content-Type': 'application/json' },
-  //     types: [
-  //       TOKEN_REQUEST, TOKEN_RECEIVED, TOKEN_FAILURE
-  //     ]
-  //   }
-  // })
 
   constructor(){
   super()

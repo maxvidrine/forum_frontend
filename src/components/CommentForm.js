@@ -55,9 +55,17 @@ class CommentForm extends Component {
   }
 }
 
+export default CommentForm;
+
 // const mapStateToProps = (state) => ({
-//   isAuthenticated: reducers.isAuthenticated(state)
+//   errors: authErrors(state),
+//   isAuthenticated: isAuthenticated(state)
 // })
 
-// export default connect(mapStateToProps, null)(CommentForm);
-export default CommentForm;
+// const mapDispatchToProps = (dispatch) => ({
+//   onSubmit: (comment) => {
+//     dispatch(newComment(comment))
+//   }
+// })
+
+// export default connect(mapStateToProps, mapDispatchToProps)(CommentForm);

@@ -1,12 +1,13 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import auth, * as fromAuth from './auth.js'
+// import comment, * as fromComment from './comment.js'
 import echo, * as fromEcho from './echo.js'
 
 const rootReducer = combineReducers({
   auth: auth,
   echo: echo,
-  router: routerReducer
+  router: routerReducer,
 })
 
 export const isAuthenticated = state => fromAuth.isAuthenticated(state.auth)
@@ -18,6 +19,13 @@ export const authErrors = state => fromAuth.errors(state.auth)
 export const serverMessage = state => fromEcho.serverMessage(state.echo)
 
 export function withAuth(headers={}) {
+  return (state) => ({
+    ...headers,
+    'Authorization': `Bearer ${accessToken(state)}`
+  })
+}
+
+export function postComment(headers={}) {
   return (state) => ({
     ...headers,
     'Authorization': `Bearer ${accessToken(state)}`
